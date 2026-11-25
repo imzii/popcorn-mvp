@@ -1,13 +1,18 @@
 <script>
   // MIX: 의견 수렴. 소수 의견을 다수 의견보다 먼저 보여 주고, 평가 기준으로 후보를 평가한다.
   import { toast, today, addDays, newId } from '../lib/util.js';
-  import { app, save, isLeader, criteriaOf, members } from '../lib/app.svelte.js';
+  import { app, save, saveUi, isLeader, criteriaOf, members, roundNumber } from '../lib/app.svelte.js';
   import { splitOpinions, teamComposition, questionForMinority, questionForMajority, buildPlan } from '../lib/ai.js';
   import BottomBar from '../components/BottomBar.svelte';
   import Reaction from '../components/Reaction.svelte';
   import TwoStepButton from '../components/TwoStepButton.svelte';
 
   const room = $derived(app.room);
+
+  // 이 기기에서 이번 라운드의 MIX를 처음 볼 때만 카드가 톡톡 나타난다.
+  const firstLook = app.ui.mixSeen !== roundNumber();
+  if (firstLook) { app.ui.mixSeen = roundNumber(); saveUi(); }
+  const delay = i => `--i:${Math.min(i, 10)}`;
   const mix = $derived(room.mix || {});
   const criteria = $derived(criteriaOf());
   const opinions = $derived(splitOpinions(room));
@@ -53,6 +58,7 @@
   <div class="idea-title">{card.text}</div>{#if card.why}<div class="idea-why">{card.why}</div>{/if}
 {/snippet}
 
+<div class:reveal={firstLook}>
 <h1>의견 {opinions.cards.length}장이 모였어요</h1><p class="sub">{room.topic}</p>
 
 <div class="card note"><div class="note-title">융합 협업 가이드</div>
@@ -65,8 +71,8 @@
 
 <section class="card">
   <div class="row between"><h3><span class="badge minority">B</span>소수 의견</h3><span class="sm sub">{opinions.minority.length}장</span></div>
-  {#each opinions.minority as card (card.id)}
-    <div class="idea">{@render idea(card)}
+  {#each opinions.minority as card, i (card.id)}
+    <div class="idea" style={delay(i)}>{@render idea(card)}
       <div class="sm" style="margin-top:8px"><b>생각해 볼 질문</b> {questionForMinority(card)}</div>
       <Reaction key={card.id} {revealed} />
     </div>
@@ -77,7 +83,7 @@
 
 <section class="card">
   <div class="row between"><h3><span class="badge">A</span>다수 의견</h3><span class="sm sub">{opinions.majority.length}장</span></div>
-  {#each opinions.majority as card (card.id)}<div class="idea">{@render idea(card)}</div>{/each}
+  {#each opinions.majority as card, i (card.id)}<div class="idea" style={delay(opinions.minority.length + i)}>{@render idea(card)}</div>{/each}
   {#if opinions.center}
     <div class="sm" style="margin-top:10px"><b>생각해 볼 질문</b> {questionForMajority(opinions.center)}</div>
     <Reaction key="majority" {revealed} />
@@ -110,6 +116,8 @@
 {#if final}
   <div class="card emphasis"><h3>최종안</h3><p style="font-weight:700;font-size:17px;margin-top:4px">{final.text}</p></div>
 {/if}
+
+</div>
 
 <BottomBar message={final ? '최종안이 확정됐어요' : waiting ? `${waiting}명이 평가 중이에요` : '모두 평가를 마쳤어요'}>
   {#snippet left()}

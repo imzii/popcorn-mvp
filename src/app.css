@@ -180,3 +180,19 @@ th { font-size: 12.5px; color: var(--sub); font-weight: 600; }
 .dig-chain { margin: 12px 0 0; padding-left: 20px; font-size: 14px; }
 .dig-chain li { margin-bottom: 8px; }
 .dig-question { display: block; font-size: 15px; font-weight: 700; color: var(--ink); margin: 12px 0 8px; }
+
+/* POP 제출 현황: 팀원마다 알갱이 하나 (진행 링 → 팝콘) */
+.kernels { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 10px 6px; margin-top: 12px; }
+.kernel { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 12px; color: var(--sub); text-align: center; }
+.kernel svg { width: 46px; height: 46px; overflow: visible; margin-bottom: 2px; }
+.kernel b { color: var(--ink); font-size: 13px; }
+.kernel svg.pop { animation: kernel-pop .45s cubic-bezier(.2, 1.7, .4, 1); }
+@keyframes kernel-pop { from { transform: scale(.4); } to { transform: none; } }
+
+/* MIX 첫 공개: 의견 카드가 시간차를 두고 톡톡 나타난다 (한 번만) */
+.reveal .idea { animation: card-pop .32s cubic-bezier(.2, 1.4, .4, 1) both; animation-delay: calc(var(--i, 0) * 50ms); }
+@keyframes card-pop { from { opacity: 0; transform: scale(.94) translateY(6px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .kernel svg.pop, .reveal .idea { animation: none; }
+}

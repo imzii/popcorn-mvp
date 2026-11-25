@@ -6,6 +6,7 @@
   import { seasoningQuestion, nextWhy } from '../lib/ai.js';
   import BottomBar from '../components/BottomBar.svelte';
   import TwoStepButton from '../components/TwoStepButton.svelte';
+  import Kernel from '../components/Kernel.svelte';
 
   const ui = app.ui;
   // 정할 것이 바뀌면(다음 라운드) 이 기기의 작성 중 상태를 비운다.
@@ -71,8 +72,8 @@
     <span class="sm">{over ? '발산 기간이 끝났어요' : '남은 시간'}</span>
     <span class="timer">{over ? '0:00' : Number.isFinite(left) ? formatRemaining(left) : '-'}</span>
   </div>
-  <div class="people">
-    {#each members() as [id, m] (id)}<span class="chip" class:on={countOf(id) >= minCards}>{m.name} {countOf(id)}장</span>{/each}
+  <div class="kernels">
+    {#each members() as [id, m] (id)}<Kernel count={countOf(id)} min={minCards} name={m.name} me={id === app.me} />{/each}
   </div>
 </div>
 
