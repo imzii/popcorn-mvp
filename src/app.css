@@ -93,7 +93,11 @@ button:disabled { opacity: .4; cursor: not-allowed; }
 .choices button { text-align: left; font-weight: 500; padding: 12px; line-height: 1.45; height: 100%; }
 .options button[aria-pressed=true], .choices button[aria-pressed=true] { background: var(--butter-soft); border-color: var(--butter); font-weight: 700; }
 
-/* 반영해 보자 / 보류 */
+/* 반영해 보자 O / X */
+.reaction { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.reaction-label { font-size: 14px; font-weight: 600; }
+.reaction .toggle { margin-top: 0; }
+.reaction .toggle button { min-width: 48px; font-weight: 700; }
 .toggle { display: inline-flex; border: 1px solid var(--control); border-radius: var(--radius); overflow: hidden; margin-top: 10px; }
 .toggle button { border: 0; border-radius: 0; min-height: 38px; padding: 6px 14px; }
 .toggle button + button { border-left: 1px solid var(--control); }
