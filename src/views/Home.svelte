@@ -61,9 +61,10 @@
     if (code.length !== 6) return toast('6자리 코드를 입력해 주세요');
     openProject(code, { local: false });
   }
+  import TitleBand from '../components/TitleBand.svelte';
 </script>
 
-<section class="hero"><h1>생각은 톡톡 자유롭게,<br>협업은 유기적으로.</h1></section>
+<TitleBand scatter title={['생각은 톡톡', '자유롭게,', '협업은 유기적으로.']} />
 
 {#if recent.length}
   <section class="card">

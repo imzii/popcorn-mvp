@@ -52,6 +52,7 @@
     save({ phase: 'run', phaseAt: Date.now(),
       [`tasks.${newId('t', 6)}`]: { title: `반영: ${final.text}`, role: '', who: '', due, status: 0, order: 99 } });
   }
+  import TitleBand from '../components/TitleBand.svelte';
 </script>
 
 {#snippet idea(card)}
@@ -59,7 +60,7 @@
 {/snippet}
 
 <div class:reveal={firstLook}>
-<h1>의견 {opinions.cards.length}장이 모였어요</h1><p class="sub">{room.topic}</p>
+<TitleBand label="이번에 함께 정할 것" title={room.topic} sub="의견 {opinions.cards.length}장이 모였어요" />
 
 <div class="card note"><div class="note-title">융합 협업 가이드</div>
   {#if team.kind === 'same'}

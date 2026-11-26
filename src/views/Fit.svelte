@@ -28,9 +28,10 @@
     const now = Date.now();
     save({ phase: 'pop', phaseAt: now, popEnd: now + (room.popMinutes || room.popMin || 1440) * 60000 });
   }
+  import TitleBand from '../components/TitleBand.svelte';
 </script>
 
-<h1>{room.name}</h1><p class="sub">{room.topic}</p>
+<TitleBand label="이번에 함께 정할 것" title={room.topic} sub={room.name} />
 
 <div class="card"><h3>팀원 초대</h3>
   <div class="row between" style="margin:10px 0">

@@ -62,9 +62,10 @@
     save({ popEnd: Math.max(Date.now(), room.popEnd || 0) + extendBy * 60000 });
     toast(`${formatMinutes(extendBy)} 연장했어요`);
   }
+  import TitleBand from '../components/TitleBand.svelte';
 </script>
 
-<h1>{room.topic}</h1>
+<TitleBand label="이번에 함께 정할 것" title={room.topic} />
 
 <div class="card" id="popStatus">
   <div class="row between"><b>제출 현황</b><span class="sm sub">카드 {cards.length}장, 다 쓴 사람 {doneCount}/{members().length}명</span></div>

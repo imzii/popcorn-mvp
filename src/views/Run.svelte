@@ -60,9 +60,10 @@
       ...tasks.map(([, t]) => `| ${t.title} | ${t.who ? memberName(t.who) : '미배정'} | ${t.due || '-'} | ${TASK_STATUS[t.status]} |`),
     ].join('\n');
   }
+  import TitleBand from '../components/TitleBand.svelte';
 </script>
 
-<h1>{room.name}</h1>
+<TitleBand label="실행 중" title={room.name} />
 
 <div class="card"><h3>정한 것</h3>
   {#each decisions() as d, i}

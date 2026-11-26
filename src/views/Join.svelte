@@ -47,10 +47,11 @@
     } });
     toast(`${trait}: ${TRAITS[trait]}`);
   }
+  import TitleBand from '../components/TitleBand.svelte';
 </script>
 
 {#if step === 1}
-  <h1>{app.room.name}</h1><p class="sub">{app.room.topic}</p>
+  <TitleBand label="이번에 함께 정할 것" title={app.room.topic} sub={app.room.name} />
   <form class="card" novalidate onsubmit={e => e.preventDefault()}>
     <h2 style="margin-top:0">나를 소개해 주세요 <span class="xs sub">1/2</span></h2>
     {#if members().length}
